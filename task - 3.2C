@@ -12,8 +12,8 @@
 */
 
 #include "thingProperties.h"
-# define threshold_value 700 
-float sensor;
+# define value 700 
+float bhsensor;
 #include <Arduino.h>
 #include <hp_BH1750.h>
 hp_BH1750 BH1750;
@@ -25,7 +25,7 @@ void setup() {
   delay(1500); 
   pinMode(LED_BUILTIN, OUTPUT);
   
-  bool avail = BH1750.begin(BH1750_TO_GROUND);
+  bool available = BH1750.begin(BH1750_TO_GROUND);
   
   // Defined in thingProperties.h
   initProperties();
@@ -47,15 +47,15 @@ void setup() {
 void loop() {
   ArduinoCloud.update();
   BH1750.start();   
-  sensor = BH1750.getLux();
-  intensity = sensor;
-  if(intensity > threshold_value)
+  bhsensor = BH1750.getLux();
+  intensity = bhsensor;
+  if(intensity > value)
   {
-    Serial.println("Light is hitting the object");
+    Serial.println("Sunlight is hitting the terrarium");
     digitalWrite(LED_BUILTIN, HIGH);
     delay(1000);
     digitalWrite(LED_BUILTIN, LOW);
-    delay(500);
+    delay(1000);
   }
  
 }
